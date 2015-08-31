@@ -1,3 +1,7 @@
+[![wercker status](https://app.wercker.com/status/163db75d2fa765f63c6215c5f9e17315/s/master "wercker status")](https://app.wercker.com/project/bykey/163db75d2fa765f63c6215c5f9e17315)
+[![Code Climate](https://codeclimate.com/github/node-modli/modli-nedb/badges/gpa.svg)](https://codeclimate.com/github/node-modli/modli-nedb)
+[![Test Coverage](https://codeclimate.com/github/node-modli/modli-nedb/badges/coverage.svg)](https://codeclimate.com/github/node-modli/modli-nedb/coverage)
+
 # Modli - NeDB Adapter
 
 This module provides adapter for the [NeDB](https://github.com/louischatriot/nedb)
@@ -52,13 +56,13 @@ task method:
 
 ## Testing
 
-Running `make test` will run the full test suite. Since adapters require a data 
-source if one is not configured the tests will fail. To counter this tests are 
+Running `make test` will run the full test suite. Since adapters require a data
+source if one is not configured the tests will fail. To counter this tests are
 able to be broken up.
 
 **Test Inidividual File**
 
-An individual spec can be run by specifying the `FILE`. This is convenient when 
+An individual spec can be run by specifying the `FILE`. This is convenient when
 working on an individual adapter.
 
 ```
