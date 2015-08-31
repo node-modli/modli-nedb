@@ -50,7 +50,7 @@ lint:
 
 test:
 	$(call colorecho, "Testing $(TESTS) --recursive")
-	$(BIN)/mocha $(T_ARGS) $(TESTS) --recursive
+	$(BIN)/mocha $(T_ARGS) $(TESTS)$(FILE)
 
 test-cover:
 	$(call colorecho, "Running coverage report")
