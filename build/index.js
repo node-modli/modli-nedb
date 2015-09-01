@@ -33,7 +33,7 @@ nedb.create = function (body) {
   var version = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 
   // Test validation
-  var validationErrors = nedb.validate(body, version);
+  var validationErrors = this.validate(body, version);
   // Return promise
   return new Promise(function (resolve, reject) {
     /* istanbul ignore if */
@@ -67,7 +67,7 @@ nedb.update = function (query, body) {
   var version = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
   // Test validation
-  var validationErrors = nedb.validate(body, version);
+  var validationErrors = this.validate(body, version);
   // Return promise
   return new Promise(function (resolve, reject) {
     /* istanbul ignore if */

@@ -23,9 +23,9 @@ nedb.config = (cfg) => {
  * @param {String|Number} [version] The version of the model to use
  * @returns {Object} promise
  */
-nedb.create = (body, version = false) => {
+nedb.create = function (body, version = false) {
   // Test validation
-  const validationErrors = nedb.validate(body, version);
+  const validationErrors = this.validate(body, version);
   // Return promise
   return new Promise((resolve, reject) => {
     /* istanbul ignore if */
@@ -53,9 +53,9 @@ nedb.read = (query) => nedb.db.findAsync(query);
  * @param {String|Number} [version] The version of the model to use
  * @returns {Object} promise
  */
-nedb.update = (query, body, version = false) => {
+nedb.update = function (query, body, version = false) {
   // Test validation
-  const validationErrors = nedb.validate(body, version);
+  const validationErrors = this.validate(body, version);
   // Return promise
   return new Promise((resolve, reject) => {
     /* istanbul ignore if */
