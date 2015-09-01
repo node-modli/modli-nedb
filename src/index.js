@@ -41,9 +41,23 @@ nedb.create = function (body, version = false) {
  * Reads from the database
  * @memberof nedb
  * @param {Object} query Specific id or query to construct read
+ * @param {Number|String} version The version of the model to match
  * @returns {Object} promise
  */
-nedb.read = (query) => nedb.db.findAsync(query);
+nedb.read = function (query, version = false) {
+  const sanitize = this.sanitize;
+  return new Promise((resolve, reject) => {
+    nedb.db.findAsync(query)
+      .then((results) => {
+        const tmp = [];
+        results.forEach((r) => {
+          tmp.push(sanitize(r, version));
+        });
+        resolve(tmp);
+      })
+      .catch((err) => reject(err));
+  });
+};
 
 /**
  * Updates an entry in the database

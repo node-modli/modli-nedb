@@ -13,6 +13,11 @@ nedb.validate = (body) => {
   return null;
 };
 
+// Mock sanitize method, this is automatically done by the model
+nedb.sanitize = (body) => {
+  return body;
+};
+
 describe('nedb', () => {
   let testId = null;
 
