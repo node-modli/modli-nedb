@@ -49,10 +49,24 @@ nedb.create = function (body) {
  * Reads from the database
  * @memberof nedb
  * @param {Object} query Specific id or query to construct read
+ * @param {Number|String} version The version of the model to match
  * @returns {Object} promise
  */
 nedb.read = function (query) {
-  return nedb.db.findAsync(query);
+  var version = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
+  var sanitize = this.sanitize;
+  return new Promise(function (resolve, reject) {
+    nedb.db.findAsync(query).then(function (results) {
+      var tmp = [];
+      results.forEach(function (r) {
+        tmp.push(sanitize(r, version));
+      });
+      resolve(tmp);
+    })['catch'](function (err) {
+      return reject(err);
+    });
+  });
 };
 
 /**
