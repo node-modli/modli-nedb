@@ -1,10 +1,16 @@
 /* eslint no-unused-expressions: 0 */
 /* global expect, request, describe, it, before, after */
 import '../setup';
-import { nedb } from '../../src/index';
+
+const NEDB = require('../../src/index');
+
+// Create instance
+const nedb = new NEDB({
+  inMemoryOnly: true
+});
 
 // Mock validation method, this is automatically done by the model
-nedb.validate = (body) => {
+const validate = (body) => {
   // Test validation failure by passing `failValidate: true`
   if (body.failValidate) {
     return { error: true };
@@ -14,19 +20,38 @@ nedb.validate = (body) => {
 };
 
 // Mock sanitize method, this is automatically done by the model
-nedb.sanitize = (body) => {
+const sanitize = (body) => {
   return body;
 };
 
-describe('nedb', () => {
-  let testId = null;
+// Inherit
+nedb.validate = validate;
+nedb.sanitize = sanitize;
 
-  describe('config', () => {
-    it('sets the config', () => {
-      const testConfig = nedb.config({
+describe('nedb', () => {
+  describe('construct', () => {
+    it('creates a new instance of the adapter', () => {
+      // Instantiate
+      const nedbConstruct = new NEDB({
         inMemoryOnly: true
       });
-      expect(testConfig).to.be.true;
+      // Ensure object
+      expect(nedbConstruct).to.be.an.object;
+      // Ensure db has been created
+      expect(nedbConstruct).to.have.property('db');
+    });
+  });
+
+  describe('inherit', () => {
+    it('inherits new methods from modli core', () => {
+      // Instantiate
+      const nedbInherit = new NEDB({
+        inMemoryOnly: true
+      });
+      // Extend with validate and sanitize
+      nedbInherit.validate = validate;
+      nedbInherit.sanitize = sanitize;
+      expect(nedb.validate).to.be.a.function;
     });
   });
 
@@ -47,7 +72,6 @@ describe('nedb', () => {
       })
       .then((data) => {
         expect(data).to.be.an.object;
-        testId = data._id;
         done();
       })
       .catch((err) => done(err));
@@ -55,6 +79,21 @@ describe('nedb', () => {
   });
 
   describe('read', () => {
+    let testId;
+
+    before((done) => {
+      nedb.create({
+        name: 'jsmith',
+        email: 'jsmith@gmail.com'
+      })
+      .then((data) => {
+        expect(data).to.be.an.object;
+        testId = data._id;
+        done();
+      })
+      .catch((err) => done(err));
+    });
+
     it('reads an item when passed a query object', (done) => {
       nedb.read({ _id: testId })
         .then((data) => {
@@ -66,6 +105,21 @@ describe('nedb', () => {
   });
 
   describe('update', () => {
+    let testId;
+
+    before((done) => {
+      nedb.create({
+        name: 'jsmith',
+        email: 'jsmith@gmail.com'
+      })
+      .then((data) => {
+        expect(data).to.be.an.object;
+        testId = data._id;
+        done();
+      })
+      .catch((err) => done(err));
+    });
+
     it('fails when validation does not pass', (done) => {
       nedb.create({
         failValidate: true
@@ -88,6 +142,21 @@ describe('nedb', () => {
   });
 
   describe('delete', () => {
+    let testId;
+
+    before((done) => {
+      nedb.create({
+        name: 'jsmith',
+        email: 'jsmith@gmail.com'
+      })
+      .then((data) => {
+        expect(data).to.be.an.object;
+        testId = data._id;
+        done();
+      })
+      .catch((err) => done(err));
+    });
+
     it('deletes and item when passed a query', (done) => {
       nedb.delete({ _id: testId })
         .then((numDeleted) => {
