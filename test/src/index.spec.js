@@ -69,7 +69,7 @@ describe('nedb', () => {
       nedb.create({
         name: 'jsmith',
         email: 'jsmith@gmail.com'
-      })
+      }, 1)
       .then((data) => {
         expect(data).to.be.an.object;
         done();
@@ -95,7 +95,7 @@ describe('nedb', () => {
     });
 
     it('reads an item when passed a query object', (done) => {
-      nedb.read({ _id: testId })
+      nedb.read({ _id: testId }, 1)
         .then((data) => {
           expect(data[0].name).to.equal('jsmith');
           done();
@@ -132,7 +132,7 @@ describe('nedb', () => {
     it('updates an items based on query and object passed', (done) => {
       nedb.update({ _id: testId }, {
         name: 'jsmith1'
-      })
+      }, 1)
       .then((numUpdated) => {
         expect(numUpdated).to.equal(1);
         done();

@@ -79,8 +79,6 @@ var _default = (function () {
             tmp.push(_this2.sanitize(r, version));
           });
           resolve(tmp);
-        })['catch'](function (err) {
-          return reject(err);
         });
       });
     }

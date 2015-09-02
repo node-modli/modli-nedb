@@ -53,8 +53,7 @@ export default class {
             tmp.push(this.sanitize(r, version));
           });
           resolve(tmp);
-        })
-        .catch((err) => reject(err));
+        });
     });
   }
 
