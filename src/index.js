@@ -45,7 +45,7 @@ export default class {
    * @returns {Object} promise
    */
   read (query, version = false) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.db.findAsync(query)
         .then((results) => {
           const tmp = [];

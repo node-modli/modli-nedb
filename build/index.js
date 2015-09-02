@@ -72,7 +72,7 @@ var _default = (function () {
 
       var version = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 
-      return new Promise(function (resolve, reject) {
+      return new Promise(function (resolve) {
         _this2.db.findAsync(query).then(function (results) {
           var tmp = [];
           results.forEach(function (r) {
