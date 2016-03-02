@@ -1,6 +1,6 @@
 {
   "name": "modli-nedb",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Modli adapter for NeDB",
   "main": "build/index.js",
   "repository": {
