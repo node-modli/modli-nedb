@@ -24,17 +24,8 @@ export default class {
    * @returns {Object} promise
    */
   create (body, version = false) {
-    // Test validation
-    const validationErrors = this.validate(body, version);
-    // Return promise
-    return new Promise((resolve, reject) => {
-      /* istanbul ignore if */
-      if (validationErrors) {
-        reject(validationErrors);
-      } else {
-        resolve(this.db.insertAsync(body));
-      }
-    });
+    return this.validate(body, version)
+      .then(data => this.db.insertAsync(data));
   }
 
   /**
@@ -66,17 +57,8 @@ export default class {
    * @returns {Object} promise
    */
   update (query, body, version = false) {
-    // Test validation
-    const validationErrors = this.validate(body, version);
-    // Return promise
-    return new Promise((resolve, reject) => {
-      /* istanbul ignore if */
-      if (validationErrors) {
-        reject(validationErrors);
-      } else {
-        resolve(this.db.updateAsync(query, { $set: body }, { multi: true }));
-      }
-    });
+    return this.validate(body, version)
+      .then(data => this.db.updateAsync(query, { $set: data }, { multi: true }));
   }
 
   /**
