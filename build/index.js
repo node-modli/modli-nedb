@@ -45,16 +45,8 @@ var _default = (function () {
 
       var version = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 
-      // Test validation
-      var validationErrors = this.validate(body, version);
-      // Return promise
-      return new Promise(function (resolve, reject) {
-        /* istanbul ignore if */
-        if (validationErrors) {
-          reject(validationErrors);
-        } else {
-          resolve(_this.db.insertAsync(body));
-        }
+      return this.validate(body, version).then(function (data) {
+        return _this.db.insertAsync(data);
       });
     }
 
@@ -98,16 +90,8 @@ var _default = (function () {
 
       var version = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
-      // Test validation
-      var validationErrors = this.validate(body, version);
-      // Return promise
-      return new Promise(function (resolve, reject) {
-        /* istanbul ignore if */
-        if (validationErrors) {
-          reject(validationErrors);
-        } else {
-          resolve(_this3.db.updateAsync(query, { $set: body }, { multi: true }));
-        }
+      return this.validate(body, version).then(function (data) {
+        return _this3.db.updateAsync(query, { $set: data }, { multi: true });
       });
     }
 
